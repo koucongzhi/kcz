@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B8B',
+                        secondary: '#FFD166',
+                        accent: '#06D6A0',
+                        dark: '#073B4C',
+                        light: '#F8F9FA',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+            }
+            .animate-float {
+                animation: float 3s ease-in-out infinite;
+            }
+            .animate-float-delay-1 {
+                animation: float 3s ease-in-out 0.5s infinite;
+            }
+            .animate-float-delay-2 {
+                animation: float 3s ease-in-out 1s infinite;
+            }
+            .animate-pulse-slow {
+                animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            .animate-sparkle {
+                animation: sparkle 1.5s infinite;
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 to-yellow-50 min-h-screen font-inter overflow-x-hidden">
+    <!-- 顶部装饰 -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
+
+    <!-- 烟花背景 -->
+    <div id="fireworks-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- 背景音乐控制 -->
+    <div class="fixed bottom-6 right-6 z-50 bg-white/80 backdrop-blur-sm rounded-full p-3 shadow-lg transform transition-all hover:scale-110">
+        <button id="music-toggle" class="w-10 h-10 rounded-full flex items-center justify-center focus:outline-none">
+            <i class="fa-solid fa-music text-primary text-xl"></i>
+        </button>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="birthday-music" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-party-1388.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 主要内容 -->
+    <main class="relative z-10 container mx-auto px-4 py-12 md:py-20">
+        <!-- 生日帽装饰 -->
+        <div class="absolute top-8 right-8 md:top-16 md:right-16 w-16 h-16 md:w-24 md:h-24 opacity-70 animate-float">
+            <i class="fa-solid fa-birthday-cake text-primary text-4xl md:text-6xl"></i>
+        </div>
+        
+        <!-- 标题区域 -->
+        <section class="text-center mb-12 md:mb-20">
+            <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent mb-4 text-shadow-lg tracking-tight">
+                生日快乐!
+            </h1>
+            <p class="text-[clamp(1.2rem,3vw,1.8rem)] text-dark/80 max-w-3xl mx-auto">
+                愿你的每一天都充满喜悦与幸福，<br>
+                每一个梦想都能成真!
+            </p>
+        </section>
+
+        <!-- 蜡烛与蛋糕 -->
+        <section class="flex justify-center items-center mb-16">
+            <div class="relative">
+                <!-- 蛋糕 -->
+                <div class="w-64 h-40 bg-gradient-to-t from-[#D89216] to-[#F7D060] rounded-t-3xl relative overflow-hidden shadow-lg">
+                    <!-- 奶油层 -->
+                    <div class="absolute top-0 left-0 right-0 h-8 bg-white/90"></div>
+                    
+                    <!-- 装饰糖粒 -->
+                    <div class="absolute top-10 left-0 right-0 flex flex-wrap justify-between px-4">
+                        <div class="w-2 h-2 bg-primary rounded-full mx-1 my-1 animate-sparkle"></div>
+                        <div class="w-2 h-2 bg-secondary rounded-full mx-1 my-1 animate-sparkle" style="animation-delay: 0.2s"></div>
+                        <div class="w-2 h-2 bg-accent rounded-full mx-1 my-1 animate-sparkle" style="animation-delay: 0.4s"></div>
+                        <div class="w-2 h-2 bg-primary rounded-full mx-1 my-1 animate-sparkle" style="animation-delay: 0.6s"></div>
+                        <div class="w-2 h-2 bg-secondary rounded-full mx-1 my-1 animate-sparkle" style="animation-delay: 0.8s"></div>
+                        <div class="w-2 h-2 bg-accent rounded-full mx-1 my-1 animate-sparkle" style="animation-delay: 1s"></div>
+                    </div>
+                </div>
+                
+                <!-- 蜡烛 -->
+                <div class="absolute top-[-40px] left-1/2 transform -translate-x-1/2 flex space-x-3">
+                    <div class="w-4 h-20 bg-primary rounded-t-sm animate-float">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-yellow-400 rounded-full shadow-lg animate-pulse-slow"></div>
+                    </div>
+                    <div class="w-4 h-24 bg-secondary rounded-t-sm animate-float-delay-1">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-yellow-400 rounded-full shadow-lg animate-pulse-slow"></div>
+                    </div>
+                    <div class="w-4 h-28 bg-accent rounded-t-sm animate-float-delay-2">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-yellow-400 rounded-full shadow-lg animate-pulse-slow"></div>
+                    </div>
+                </div>
+                
+                <!-- 盘子 -->
+                <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-72 h-6 bg-gray-200 rounded-full shadow-md"></div>
+            </div>
+        </section>
+
+        <!-- 祝福卡片 -->
+        <section class="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 md:p-12 mb-16 border border-white/30 transform transition-all hover:shadow-2xl">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-dark mb-4">特别的祝福</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <p class="text-lg md:text-xl text-dark/80 leading-relaxed mb-6">
+                今天是属于你的特别日子，愿快乐与你同在，梦想与你同行。
+                愿你的生活如彩虹般绚烂，每一天都充满无限可能。
+                生日快乐，愿你在新的一岁里收获满满的爱与幸福！
+            </p>
+            
+            <div class="flex justify-center mt-8">
+                <button id="light-candles" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white rounded-full shadow-lg transform transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <i class="fa-solid fa-fire mr-2"></i> 点燃蜡烛
+                </button>
+            </div>
+        </section>
+
+        <!-- 礼物区域 -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 transform transition-all hover:scale-105 hover:shadow-xl">
+                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <i class="fa-solid fa-gift text-primary text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-center mb-3">特别礼物</h3>
+                <p class="text-center text-dark/70">
+                    为你准备了一份惊喜，愿它能为你的生日增添更多欢乐！
+                </p>
+            </div>
+            
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 transform transition-all hover:scale-105 hover:shadow-xl">
+                <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <i class="fa-solid fa-star text-secondary text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-center mb-3">美好回忆</h3>
+                <p class="text-center text-dark/70">
+                    回忆是最珍贵的礼物，愿你的每一天都值得铭记！
+                </p>
+            </div>
+            
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 transform transition-all hover:scale-105 hover:shadow-xl">
+                <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                    <i class="fa-solid fa-heart text-accent text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-center mb-3">深深祝福</h3>
+                <p class="text-center text-dark/70">
+                    愿你的生活充满爱与欢笑，生日快乐，心想事成！
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="relative z-10 bg-white/60 backdrop-blur-sm py-6 border-t border-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-dark/60 text-sm">
+                生日快乐 · 幸福常伴
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // 烟花效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const fireworksContainer = document.getElementById('fireworks-container');
+            const lightCandlesBtn = document.getElementById('light-candles');
+            const musicToggle = document.getElementById('music-toggle');
+            const birthdayMusic = document.getElementById('birthday-music');
+            let isMusicPlaying = false;
+            
+            // 创建烟花
+            function createFirework() {
+                const firework = document.createElement('div');
+                const x = Math.random() * window.innerWidth;
+                const y = window.innerHeight;
+                
+                firework.style.position = 'absolute';
+                firework.style.left = `${x}px`;
+                firework.style.bottom = '0';
+                firework.style.width = '6px';
+                firework.style.height = '6px';
+                firework.style.backgroundColor = getRandomColor();
+                firework.style.borderRadius = '50%';
+                firework.style.boxShadow = '0 0 20px 5px rgba(255, 255, 255, 0.5)';
+                firework.style.zIndex = '0';
+                
+                fireworksContainer.appendChild(firework);
+                
+                // 发射动画
+                setTimeout(() => {
+                    firework.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    firework.style.bottom = `${Math.random() * window.innerHeight * 0.5 + window.innerHeight * 0.3}px`;
+                    
+                    // 爆炸效果
+                    setTimeout(() => {
+                        explode(firework, x, firework.getBoundingClientRect().top);
+                    }, 1000);
+                }, 10);
+            }
+            
+            // 获取随机颜色
+            function getRandomColor() {
+                const colors = ['#FF6B8B', '#FFD166', '#06D6A0', '#118AB2', '#073B4C'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+            
+            // 爆炸效果
+            function explode(firework, x, y) {
+                firework.style.opacity = '0';
+                
+                // 创建爆炸粒子
+                const particleCount = 30;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    const angle = (i / particleCount) * 360;
+                    const distance = Math.random() * 50 + 20;
+                    const vx = Math.cos(angle * Math.PI / 180) * distance;
+                    const vy = Math.sin(angle * Math.PI / 180) * distance;
+                    
+                    particle.style.position = 'absolute';
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    particle.style.width = '4px';
+                    particle.style.height = '4px';
+                    particle.style.backgroundColor = getRandomColor();
+                    particle.style.borderRadius = '50%';
+                    particle.style.boxShadow = '0 0 10px 2px rgba(255, 255, 255, 0.5)';
+                    particle.style.zIndex = '0';
+                    particle.style.opacity = '0';
+                    
+                    fireworksContainer.appendChild(particle);
+                    
+                    // 粒子散开动画
+                    setTimeout(() => {
+                        particle.style.opacity = '1';
+                        particle.style.transition = `all ${Math.random() * 0.5 + 0.5}s cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+                        particle.style.left = `${x + vx}px`;
+                        particle.style.top = `${y + vy}px`;
+                        
+                        // 粒子消失
+                        setTimeout(() => {
+                            particle.style.opacity = '0';
+                            setTimeout(() => {
+                                particle.remove();
+                            }, 500);
+                        }, 500);
+                    }, 10);
+                }
+                
+                // 移除烟花
+                setTimeout(() => {
+                    firework.remove();
+                }, 500);
+            }
+            
+            // 随机创建烟花
+            function launchFireworks() {
+                setInterval(() => {
+                    if (Math.random() > 0.7) {
+                        createFirework();
+                    }
+                }, 500);
+            }
+            
+            // 音乐控制
+            function toggleMusic() {
+                if (isMusicPlaying) {
+                    birthdayMusic.pause();
+                    musicToggle.innerHTML = '<i class="fa-solid fa-music text-primary text-xl"></i>';
+                } else {
+                    birthdayMusic.play().catch(e => {
+                        console.log('无法自动播放音频:', e);
+                        // 提示用户点击播放
+                        alert('由于浏览器限制，需要您点击页面任意位置启动音乐');
+                        document.addEventListener('click', function startMusic() {
+                            birthdayMusic.play().then(() => {
+                                isMusicPlaying = true;
+                                musicToggle.innerHTML = '<i class="fa-solid fa-pause text-primary text-xl"></i>';
+                                document.removeEventListener('click', startMusic);
+                            }).catch(e => console.log('仍无法播放音乐:', e));
+                        }, { once: true });
+                    });
+                    musicToggle.innerHTML = '<i class="fa-solid fa-pause text-primary text-xl"></i>';
+                }
+                isMusicPlaying = !isMusicPlaying;
+            }
+            
+            // 点击按钮点燃蜡烛并发射烟花
+            lightCandlesBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fa-solid fa-check mr-2"></i> 蜡烛已点燃';
+                this.disabled = true;
+                this.classList.remove('bg-primary');
+                this.classList.add('bg-accent');
+                
+                // 发射烟花
+                launchFireworks();
+                
+                // 播放生日快乐歌
+                birthdayMusic.volume = 0.3;
+                toggleMusic();
+            });
+            
+            // 音乐切换按钮
+            musicToggle.addEventListener('click', toggleMusic);
+            
+            // 初始创建几个烟花
+            for (let i = 0; i < 3; i++) {
+                setTimeout(createFirework, i * 500);
+            }
+        });
+    </script>
+</body>
+</html>
+    
